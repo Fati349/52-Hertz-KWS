@@ -47,15 +47,33 @@ class AudioPipeline:
         if max_val > 0:
             audio = audio / max_val
         return audio
-
+    
     def extract_mfcc(self, audio):
         mfccs = librosa.feature.mfcc(y=audio, sr=self.sampling_rate, n_mfcc=self.n_mfcc)
-        return mfccs
+        mfccs = (mfccs - np.mean(mfccs)) / (np.std(mfccs) + 1e-8)   # normalisation
+        return mfccs.astype(np.float32)
+    
+    def extract_log_mel(self, audio):
+        mel = librosa.feature.melspectrogram(y=audio, sr=self.sampling_rate,
+                                             n_mels=self.n_mels, n_fft=self.n_fft,
+                                             hop_length=self.hop_length)
+        log_mel = librosa.power_to_db(mel, ref=np.max)
+        log_mel = (log_mel - np.mean(log_mel)) / (np.std(log_mel) + 1e-8)
+        return log_mel.astype(np.float32)
 
-    def extract_log_mel_spectrogram(self, audio):
-        mel_spectrogram = librosa.feature.melspectrogram(y=audio, sr=self.sampling_rate, n_mels=self.n_mels)
-        log_mel_spectrogram = librosa.power_to_db(mel_spectrogram, ref=np.max)
-        return log_mel_spectrogram
+    def extract_mfcc_from_path(self, path):
+        path  = path.decode("utf-8")
+        audio = self.load_audio(path)
+        audio = self.normalize_audio(audio)
+        mfccs = self.extract_mfcc(audio)
+        return mfccs[..., np.newaxis]          # [n_mfcc, n_frames, 1]
+
+    def extract_log_mel_from_path(self, path):
+        path  = path.decode("utf-8")
+        audio = self.load_audio(path)
+        audio = self.normalize_audio(audio)
+        log_mel = self.extract_log_mel(audio)
+        return log_mel[..., np.newaxis]        # [n_mels, n_frames, 1]
     
     # Optionally, you can add a method to ensure all audio samples are the same length
     def pad_or_trim(self, audio):

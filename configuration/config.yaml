@@ -6,11 +6,15 @@ audio:
   n_mfcc: 40
   n_fft: 512
   hop_length: 160
-  n_mels: 40
+  n_mels: 64
+  n_frames: 101
 
 model:
-  variant: "M"         
-  num_classes: 2        
+  name: "dscnn"          # dscnn / yamnet / resnet
+  variant: "M"           # S / M / L (pour dscnn)
+  feature: "mfcc"        # mfcc / log_mel
+  input_shape: [40, 101, 1]
+  num_classes: 2
 
 training:
   batch_size: 64
