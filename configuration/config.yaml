@@ -1,0 +1,44 @@
+model:
+  architecture: miniresnet
+  variant: v1-s1
+  pretrained_weights: "path/to/miniresnet_v1_s1.h5"
+  freeze_layers: true # peu de dataset, pour eviter l'overfitting
+
+training:
+  batch_size: 64
+  epochs: 50
+  learning_rate: 0.0001        # fine-tuning -> LR réduit
+  val_split: 0.15
+  test_split: 0.15
+
+dataset:
+  root_dir: "./data"
+  num_classes: 3
+  classes:
+    - "talky"
+    - "silence"
+    - "unknown"
+
+quantization:
+  dtype: "int8"
+  representative_samples: 200
+
+audio:
+  sample_rate: 16000
+  duration_ms: 1000
+
+features:
+  type: log_mel_spectrogram      #  était: mfcc
+
+  log_mel_spectrogram:
+    n_mels: 64                   #  était: n_mfcc: 10
+    window_ms: 40
+    stride_ms: 20
+    n_fft: 640                   # 40ms × 16000 / 1000
+    hop_length: 320              # 20ms × 16000 / 1000
+    n_frames: 50                 #  était: 49  (vérifier center=True)
+    fmin: 0
+    fmax: 8000                   # Nyquist à 16kHz
+    center: true                 
+
+input_shape: [64, 50, 1]         #   [n_mels, n_frames, channel]
