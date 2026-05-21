@@ -1,14 +1,7 @@
 # imports
 import numpy as np
 import librosa
-
-
-sampling_rate= 16000
-duration_ms= 1000
-n_mfcc= 40
-n_fft= 512
-hop_length= 160
-n_mels= 40
+import yaml
 
 class AudioPipeline:
     """Pipeline for basic audio preprocessing and feature extraction.
@@ -16,19 +9,13 @@ class AudioPipeline:
     Parameters can be customized at construction; defaults use the module-level
     constants defined above.
     """
-    def __init__(self, 
-                 sampling_rate=sampling_rate, 
-                 duration_ms=duration_ms, 
-                 n_mfcc=n_mfcc, 
-                 n_mels=n_mels,
-                 n_fft=n_fft,
-                 hop_length=hop_length):
-        self.sampling_rate = sampling_rate
-        self.duration_ms = duration_ms
-        self.n_mfcc = n_mfcc
-        self.n_mels = n_mels
-        self.n_fft = n_fft
-        self.hop_length = hop_length
+    def __init__(self,  config_path):
+        with open(config_path, "r") as f:
+            self.config = yaml.safe_load(f)
+        mfcc_cfg = self.config["features"]["mfcc"]
+        self.n_mfcc      = mfcc_cfg["n_mfcc"]
+        self.hop_length  = int(mfcc_cfg["stride_ms"] * self.sampling_rate / 1000)  # 320
+        self.n_fft       = int(mfcc_cfg["window_ms"] * self.sampling_rate / 1000)  # 640
 
     def load_audio(self, file_path):
         audio, sr = librosa.load(file_path, sr=self.sampling_rate)
@@ -49,24 +36,24 @@ class AudioPipeline:
         return audio
     
     def extract_mfcc(self, audio):
-        mfccs = librosa.feature.mfcc(y=audio, sr=self.sampling_rate, n_mfcc=self.n_mfcc)
+        mfccs = librosa.feature.mfcc(
+                y=audio,
+                sr=self.sampling_rate,
+                n_mfcc=self.n_mfcc,
+                n_fft=self.n_fft,          # 640
+                hop_length=self.hop_length, # 320
+                center=False               # OBLIGATOIRE pour avoir 49 frames
+            )
         mfccs = (mfccs - np.mean(mfccs)) / (np.std(mfccs) + 1e-8)   # normalisation
         return mfccs.astype(np.float32)
     
-    def extract_log_mel(self, audio):
-        mel = librosa.feature.melspectrogram(y=audio, sr=self.sampling_rate,
-                                             n_mels=self.n_mels, n_fft=self.n_fft,
-                                             hop_length=self.hop_length)
-        log_mel = librosa.power_to_db(mel, ref=np.max)
-        log_mel = (log_mel - np.mean(log_mel)) / (np.std(log_mel) + 1e-8)
-        return log_mel.astype(np.float32)
 
     def extract_mfcc_from_path(self, path):
         path  = path.decode("utf-8")
         audio = self.load_audio(path)
         audio = self.normalize_audio(audio)
         mfccs = self.extract_mfcc(audio)
-        return mfccs[..., np.newaxis]          # [n_mfcc, n_frames, 1]
+        return mfccs.T[..., np.newaxis]          # [n_mfcc, n_frames, 1]
 
     def extract_log_mel_from_path(self, path):
         path  = path.decode("utf-8")
@@ -74,19 +61,4 @@ class AudioPipeline:
         audio = self.normalize_audio(audio)
         log_mel = self.extract_log_mel(audio)
         return log_mel[..., np.newaxis]        # [n_mels, n_frames, 1]
-    
-    # Optionally, you can add a method to ensure all audio samples are the same length
-    def pad_or_trim(self, audio):
-        target_length = int(self.sampling_rate * self.duration_ms / 1000)
-
-        if len(audio) > target_length:
-            # cutter
-            audio = audio[:target_length]
-
-        else:
-            # padding
-            pad_width = target_length - len(audio)
-            audio = np.pad(audio, (0, pad_width), mode="constant")
-
-        return audio
 
