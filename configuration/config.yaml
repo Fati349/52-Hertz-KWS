@@ -31,12 +31,12 @@ features:
   type: log_mel_spectrogram      #  était: mfcc
 
   log_mel_spectrogram:
-    n_mels: 64                   #  était: n_mfcc: 10
+    n_mels: 64                  
     window_ms: 40
     stride_ms: 20
     n_fft: 640                   # 40ms × 16000 / 1000
     hop_length: 320              # 20ms × 16000 / 1000
-    n_frames: 50                 #  était: 49  (vérifier center=True)
+    n_frames: 50                
     fmin: 0
     fmax: 8000                   # Nyquist à 16kHz
     center: true                 

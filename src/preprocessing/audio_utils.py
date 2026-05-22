@@ -99,7 +99,15 @@ class AudioPipeline:
 
         # Normalisation par instance (moyenne / écart-type)
         log_mel = (log_mel - np.mean(log_mel)) / (np.std(log_mel) + 1e-8)
-        return log_mel.astype(np.float32)
+            # ── Fix : force la dimension temporelle à n_frames ──────────────────
+        if log_mel.shape[1] > self.n_frames:
+            log_mel = log_mel[:, :self.n_frames]          # crop
+        elif log_mel.shape[1] < self.n_frames:
+            pad = self.n_frames - log_mel.shape[1]
+            log_mel = np.pad(log_mel, ((0, 0), (0, pad))) # zero-pad
+
+        return log_mel.astype(np.float32)   
+  
 
     # ─────────────────────────────────────────────
     # Points d'entrée (pour tf.data ou DataLoader)
@@ -114,7 +122,7 @@ class AudioPipeline:
 
         audio = self.load_audio(path)
         audio = self.normalize_audio(audio)
-
+        audio.append(0)  # Fix : éviter les tableaux vides après normalisation
         if augment:
             audio = self.augment_audio(audio)
 
