@@ -122,7 +122,6 @@ class AudioPipeline:
 
         audio = self.load_audio(path)
         audio = self.normalize_audio(audio)
-        audio.append(0)  # Fix : éviter les tableaux vides après normalisation
         if augment:
             audio = self.augment_audio(audio)
 
