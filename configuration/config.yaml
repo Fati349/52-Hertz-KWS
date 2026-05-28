@@ -1,13 +1,5 @@
-model:
-  architecture: miniresnet
-  variant: v1-s1
-  pretrained_weights: "path/to/miniresnet_v1_s1.h5"
-  freeze_layers: true # peu de dataset, pour eviter l'overfitting
 
 training:
-  batch_size: 64
-  epochs: 50
-  learning_rate: 0.0001        # fine-tuning -> LR réduit
   val_split: 0.15
   test_split: 0.15
 
@@ -28,7 +20,7 @@ audio:
   duration_ms: 1000
 
 features:
-  type: log_mel_spectrogram      #  était: mfcc
+  type: log_mel_spectrogram      
 
   log_mel_spectrogram:
     n_mels: 64                  
