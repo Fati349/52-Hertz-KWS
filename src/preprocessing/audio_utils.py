@@ -83,7 +83,7 @@ class AudioPipeline:
     def extract_log_mel(self, audio):
         """
         Retourne un log-mel spectrogram normalisé.
-        Shape de sortie : [n_mels, n_frames] = [64, 50]
+        Shape de sortie 
         """
         mel = librosa.feature.melspectrogram(
             y=audio,
