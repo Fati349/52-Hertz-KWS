@@ -1,0 +1,36 @@
+
+training:
+  val_split: 0.15
+  test_split: 0.15
+
+dataset:
+  root_dir: "./data"
+  num_classes: 3
+  classes:
+    - "talky"
+    - "silence"
+    - "unknown"
+
+quantization:
+  dtype: "int8"
+  representative_samples: 200
+
+audio:
+  sample_rate: 16000
+  duration_ms: 1000
+
+features:
+  type: log_mel_spectrogram      
+
+  log_mel_spectrogram:
+    n_mels: 64                  
+    window_ms: 25
+    stride_ms: 10
+    n_fft: 400                   # 25ms × 16000 / 1000
+    hop_length: 160              # 10ms × 16000 / 1000
+    n_frames: 90                
+    fmin: 125
+    fmax: 7500                   # Nyquist à 16kHz
+    center: false                 
+
+input_shape: [64, 90, 1]         #   [n_mels, n_frames, channel]

@@ -11,18 +11,18 @@ class AudioPipeline:
         mel_cfg     = self.config["features"]["log_mel_spectrogram"]  
 
         # Audio
-        self.sample_rate  = audio_cfg["sample_rate"]          # 16000
-        self.duration_ms  = audio_cfg["duration_ms"]          # 1000
-        self.n_samples    = int(self.sample_rate * self.duration_ms / 1000)  # 16000
+        self.sample_rate  = audio_cfg["sample_rate"]          
+        self.duration_ms  = audio_cfg["duration_ms"]          
+        self.n_samples    = int(self.sample_rate * self.duration_ms / 1000)  
 
         # Mel spectrogram
-        self.n_mels      = mel_cfg["n_mels"]                  # 64
-        self.n_fft       = int(mel_cfg["window_ms"] * self.sample_rate / 1000)  # 640
-        self.hop_length  = int(mel_cfg["stride_ms"] * self.sample_rate / 1000)  # 320
-        self.n_frames    = mel_cfg["n_frames"]                # 50
+        self.n_mels      = mel_cfg["n_mels"]                  
+        self.n_fft       = int(mel_cfg["window_ms"] * self.sample_rate / 1000)  
+        self.hop_length  = int(mel_cfg["stride_ms"] * self.sample_rate / 1000)  
+        self.n_frames    = mel_cfg["n_frames"]                
         self.fmin        = mel_cfg.get("fmin", 0)
-        self.fmax        = mel_cfg.get("fmax", self.sample_rate // 2)  # 8000
-        self.center      = mel_cfg.get("center", True)        # True → 50 frames
+        self.fmax        = mel_cfg.get("fmax", self.sample_rate // 2)  
+        self.center      = mel_cfg.get("center", True)       
 
     # ─────────────────────────────────────────────
     # Chargement
@@ -125,12 +125,12 @@ class AudioPipeline:
         if augment:
             audio = self.augment_audio(audio)
 
-        log_mel = self.extract_log_mel(audio)        # [64, 50]
+        log_mel = self.extract_log_mel(audio)        
 
         if augment:
-            log_mel = self.augment_spectrogram(log_mel)  # SpecAugment
+            log_mel = self.augment_spectrogram(log_mel)  
 
-        return log_mel[..., np.newaxis]              # [64, 50, 1]  
+        return log_mel[..., np.newaxis]              
 
     def extract_log_mel_for_inference(self, path):
         """Point d'entrée pour l'inférence (pas d'augmentation)."""
