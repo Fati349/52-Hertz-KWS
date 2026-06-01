@@ -1,10 +1,13 @@
 import tensorflow as tf
 import numpy as np
 import yaml
+from pathlib import Path
 from preprocessing import AudioPipeline
 
 
-pipeline = AudioPipeline("C:\\Users\\sysadmin\\Documents\\stage\\Edge AI\\KWS\\52-Hertz-KWS\\configuration\\config.yaml")
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+CONFIG_PATH = PROJECT_ROOT / "configuration" / "config.yaml"
+pipeline = AudioPipeline(str(CONFIG_PATH))
 
 def load_and_preprocess(path, label, augment=False):
     def _py_fn(p, aug):
