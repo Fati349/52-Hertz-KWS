@@ -1,6 +1,7 @@
 # Deep Learning
-tensorflow==2.15.0
+tensorflow==2.21.0
 tensorflow-datasets
+keras==3.12.2
 
 # Audio
 librosa
