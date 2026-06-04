@@ -28,9 +28,9 @@ features:
     stride_ms: 10
     n_fft: 400                   # 25ms × 16000 / 1000
     hop_length: 160              # 10ms × 16000 / 1000
-    n_frames: 90                
+    n_frames: 96                
     fmin: 125
     fmax: 7500                   # Nyquist à 16kHz
     center: false                 
 
-input_shape: [64, 90, 1]         #   [n_mels, n_frames, channel]
+input_shape: [64, 96, 1]         #   [n_mels, n_frames, channel]
