@@ -1,0 +1,86 @@
+{
+  "timestamp": "2026-06-09T16:00:12.719532",
+  "runs": [
+    {
+      "test_accuracy": 0.9211,
+      "val_accuracy": 0.9115,
+      "best_epoch": 24,
+      "run": 1,
+      "seed": 42
+    },
+    {
+      "test_accuracy": 0.9298,
+      "val_accuracy": 0.9204,
+      "best_epoch": 21,
+      "run": 2,
+      "seed": 7
+    },
+    {
+      "test_accuracy": 0.8684,
+      "val_accuracy": 0.9204,
+      "best_epoch": 17,
+      "run": 3,
+      "seed": 13
+    },
+    {
+      "test_accuracy": 0.8509,
+      "val_accuracy": 0.8938,
+      "best_epoch": 13,
+      "run": 4,
+      "seed": 21
+    },
+    {
+      "test_accuracy": 0.8684,
+      "val_accuracy": 0.885,
+      "best_epoch": 16,
+      "run": 5,
+      "seed": 99
+    },
+    {
+      "test_accuracy": 0.9035,
+      "val_accuracy": 0.8938,
+      "best_epoch": 16,
+      "run": 6,
+      "seed": 2024
+    },
+    {
+      "test_accuracy": 0.9123,
+      "val_accuracy": 0.9204,
+      "best_epoch": 21,
+      "run": 7,
+      "seed": 314
+    },
+    {
+      "test_accuracy": 0.8947,
+      "val_accuracy": 0.9204,
+      "best_epoch": 30,
+      "run": 8,
+      "seed": 1337
+    },
+    {
+      "test_accuracy": 0.9123,
+      "val_accuracy": 0.9469,
+      "best_epoch": 13,
+      "run": 9,
+      "seed": 77
+    },
+    {
+      "test_accuracy": 0.8947,
+      "val_accuracy": 0.885,
+      "best_epoch": 15,
+      "run": 10,
+      "seed": 55
+    }
+  ],
+  "statistics": {
+    "mean": 0.8956,
+    "std": 0.0243,
+    "median": 0.8991,
+    "min": 0.8509,
+    "max": 0.9298
+  },
+  "conclusion": {
+    "verdict": "Bonne (\u226580%)",
+    "stability": "Instable (std=0.0243 > 0.02)"
+  }
+}
