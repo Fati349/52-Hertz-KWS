@@ -25,11 +25,19 @@ Le projet se décompose en trois phases principales :
 
 ```
 52-Hertz-KWS/
-├── data/                  # Données audio brutes a ajouter
-├── preprocessing/         # Scripts de génération des mel-spectrogrammes
-├── resnet v2 s1/          # Scripts de transfer learning, des tests de deploiement et postprocessing
-├── models/                 # Modèles entraînés 
+├── data/                                 # Données audio brutes a ajouter
+    ├── talky/*.wav
+    ├── silence/*.wav
+    └── unknown/*.wav                                 
+├── preprocessing/                        # Scripts de génération des mel-spectrogrammes
+├── resnet v2 s1/ 
+    ├── Tests/
+    ├── Tests_results/
+    ├── training_v2s1_deploiement.ipynb   # Fichier notebook contenant les scripts de transfer learning, 
+                                            des tests de deploiement et postprocessing  
+├── models/                               # Modèles entraînés          
 ├── requirements.txt
+├── config.yaml                           
 └── README.md
 ```
 
@@ -72,15 +80,6 @@ python -c "import tensorflow as tf; print(tf.__version__)"
 
 ## Utilisation
 
-```bash
-# 1. Prétraitement des données
-python preprocessing/prepare_data.py
+Ouvrir et exécuter le notebook cellule par cellule dans Jupyter.
 
-# 2. Transfer learning
-python training/train.py
-
-# 3. Post-traitement / conversion vers .tflite
-python postprocessing/convert_to_tflite.py
-```
-
-Le fichier final `.tflite` sera généré dans le dossier `models/`, prêt à être déployé sur MCU.
+Le fichier final `.tflite` sera généré dans le dossier DEPLOY_PATH (dans notre cas c'est le dossier `models/`), prêt à être déployé sur MCU.
