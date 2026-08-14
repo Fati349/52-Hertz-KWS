@@ -26,22 +26,22 @@ Le projet se décompose en trois phases principales :
 ```
 52-Hertz-KWS/
 ├── data/                                 # Données audio brutes a ajouter
-    ├── talky/*.wav
-    ├── silence/*.wav
-    └── unknown/*.wav                                 
+│    ├── talky/*.wav
+│    ├── silence/*.wav
+│    └── unknown/*.wav                                 
 ├── preprocessing/                        # Scripts de génération des mel-spectrogrammes
 ├── resnet v2 s1/ 
-    ├── Tests/
-    ├── Tests_results/
-    └── training_v2s1_deploiement.ipynb   # Fichier notebook contenant les scripts de transfer learning, 
-                                            des tests de deploiement et postprocessing  
+│    ├── Tests/
+│    ├── Tests_results/
+│    └── training_v2s1_deploiement.ipynb   # Fichier notebook contenant les scripts de transfer learning, 
+│                                            des tests de deploiement et postprocessing  
 ├── models/                               # Modèles entraînés 
-    ├── model_MCU/
-        └── final_model_deploy_int8.tflite # Modèle final a déployer
-    └── utils/
-        ├── final_model_deploy.keras       # Modèle final en float32 a transformer en int8
-        ├── miniresnetv2_s1_64x50_tl.keras # Modèle initial pris de ModelZoo
-        └── model_v2s1-chargement.ipynb    # Fichier donnant un résumé des infos sur les couches du modèle 
+│    ├── model_MCU/
+│        └── final_model_deploy_int8.tflite # Modèle final a déployer
+│    └── utils/
+│        ├── final_model_deploy.keras       # Modèle final en float32 a transformer en int8
+│        ├── miniresnetv2_s1_64x50_tl.keras # Modèle initial pris de ModelZoo
+│        └── model_v2s1-chargement.ipynb    # Fichier donnant un résumé des infos sur les couches du modèle 
 ├── requirements.txt
 ├── config.yaml                           
 └── README.md
