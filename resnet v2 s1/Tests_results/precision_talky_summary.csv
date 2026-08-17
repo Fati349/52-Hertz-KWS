@@ -1,0 +1,2 @@
+n_files_talky,n_files_no_talky,threshold_used,recall_at_used_threshold,fpr_at_used_threshold,best_threshold_by_f1,recall_at_best_threshold,precision_at_best_threshold,f1_at_best_threshold
+30,30,0.5,0.0,0.0,0.34,1.0,0.5084745762711864,0.6741573033707865

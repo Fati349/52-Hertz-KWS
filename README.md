@@ -37,11 +37,13 @@ Le projet se décompose en trois phases principales :
 │                                            des tests de deploiement et postprocessing  
 ├── models/                               # Modèles entraînés 
 │    ├── model_MCU/
-│        └── final_model_deploy_int8.tflite # Modèle final a déployer
+│    │    └── final_model_deploy_int8.tflite # Modèle final a déployer
 │    └── utils/
 │        ├── final_model_deploy.keras       # Modèle final en float32 a transformer en int8
 │        ├── miniresnetv2_s1_64x50_tl.keras # Modèle initial pris de ModelZoo
 │        └── model_v2s1-chargement.ipynb    # Fichier donnant un résumé des infos sur les couches du modèle 
+├── configuration/
+│    └──config.yaml
 ├── requirements.txt
 ├── config.yaml                           
 └── README.md
