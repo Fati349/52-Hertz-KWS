@@ -67,6 +67,59 @@ cd 52-Hertz-KWS
 
 2. **Créer un environnement virtuel**
 
+Le projet nécessite Python 3.11 ou Python 3.12.
+
+Vérifiez la version de Python installée :
+
+```bash
+python --version
+```
+
+ou 
+
+```bash
+python3 --version
+```
+
+Si Python 3.11 ou 3.12 est installé, créez l'environnement virtuel avec la version souhaitée :
+
+Linux / macOS
+
+```bash
+python3.12 -m venv venv
+source venv/bin/activate
+```
+
+ou avec Python 3.11 :
+
+```bash
+python3.11 -m venv venv
+source venv/bin/activate
+```
+Windows
+
+Avec Python 3.12 :
+
+```bash
+py -3.12 -m venv venv
+venv\Scripts\activate
+```
+
+ou avec Python 3.11 :
+
+```bash
+py -3.11 -m venv venv
+venv\Scripts\activate
+```
+
+Vérifiez ensuite que l'environnement utilise bien la bonne version :
+
+```bash
+python --version
+```
+
+La version affichée doit être Python 3.11.x ou Python 3.12.x.
+
 ```bash
 python3 -m venv venv
 source venv/bin/activate   # Sous Linux / macOS
